@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#6147d7" />
+    <meta
+      name="description"
+      content="Business Casual turns a tap into intentional offline time, with playful routines and a gentle focus timer."
+    />
+    <title>Business Casual – Log off. Clock in to life.</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="boot-screen" id="bootScreen" role="dialog" aria-modal="true" aria-labelledby="bootTitle">
+      <div class="boot-grain" aria-hidden="true"></div>
+      <div class="boot-window pixel-border">
+        <div class="boot-logo" aria-hidden="true">
+          <span>BC</span>
+        </div>
+        <p class="eyebrow">BUSINESS CASUAL OS</p>
+        <h1 id="bootTitle">Dialing back into your life...</h1>
+        <div class="modem-art" aria-hidden="true">
+          <span class="modem-light is-on"></span>
+          <span class="modem-light"></span>
+          <span class="modem-light"></span>
+          <div class="modem-label">56K LIFE MODEM</div>
+        </div>
+        <p class="boot-message" id="bootMessage">Locating a quieter frequency</p>
+        <div class="progress-track" aria-label="Loading Business Casual">
+          <div class="progress-fill" id="bootProgress"></div>
+        </div>
+        <div class="boot-actions">
+          <span class="dialing" aria-hidden="true">♪ krrr-chhh-bing ♪</span>
+          <button class="text-button" id="skipBoot">Skip intro</button>
+        </div>
+      </div>
+    </div>
+
+    <main class="desktop" id="desktop" aria-hidden="true">
+      <div class="sky-layer" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="cloud cloud-one"></div>
+        <div class="cloud cloud-two"></div>
+        <div class="cloud cloud-three"></div>
+        <div class="star star-one">✦</div>
+        <div class="star star-two">✧</div>
+        <div class="star star-three">✦</div>
+      </div>
+
+      <header class="desktop-header">
+        <a class="brand" href="#home" aria-label="Business Casual home">
+          <span class="brand-mark" aria-hidden="true">BC</span>
+          <span>BUSINESS CASUAL</span>
+        </a>
+        <div class="system-status" aria-live="polite">
+          <span class="status-dot"></span>
+          <span id="systemStatus">ONLINE</span>
+        </div>
+      </header>
+
+      <section class="workspace" id="home" aria-label="Business Casual desktop">
+        <div class="hero-window app-window pixel-border">
+          <div class="title-bar">
+            <span>business_casual.exe</span>
+            <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow">THE INTERNET CAN WAIT</p>
+            <h1>Clock out<br />of the scroll.</h1>
+            <p class="hero-subhead">
+              Tap your Business Casual NFC card, pick a real-life routine, and give your attention somewhere better.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" data-open="focusPanel">
+                <span aria-hidden="true">◉</span> Go Offline
+              </button>
+              <button class="secondary-button" data-open="routinePanel">Schedule a routine</button>
+            </div>
+            <p class="honesty-note">
+              Heads up: a website cannot block your phone’s other apps. Business Casual is a playful cue and timer that helps you choose to step away.
+            </p>
+          </div>
+          <div class="hero-scene" aria-hidden="true">
+            <div class="portal">
+              <div class="portal-ring ring-one"></div>
+              <div class="portal-ring ring-two"></div>
+              <div class="portal-core">
+                <span>BE</span>
+                <span>RIGHT</span>
+                <span>BACK</span>
+              </div>
+            </div>
+            <div class="floating-cursor">↖</div>
+            <div class="sticky-note">remember:<br /><strong>you live here</strong></div>
+            <div class="flower flower-one">✿</div>
+            <div class="flower flower-two">✿</div>
+          </div>
+        </div>
+
+        <aside class="today-window app-window pixel-border">
+          <div class="title-bar title-bar-pink">
+            <span>TODAY.IRL</span>
+            <span aria-hidden="true">×</span>
+          </div>
+          <div class="today-content">
+            <p class="tiny-label">YOUR NEXT LITTLE LIFE</p>
+            <div id="nextRoutine" class="next-routine">
+              <span class="routine-icon" aria-hidden="true">☀</span>
+              <div>
+                <strong>No plans yet</strong>
+                <p>Schedule something worth logging off for.</p>
+              </div>
+            </div>
+            <button class="link-button" data-open="routinePanel">+ Add a routine</button>
+          </div>
+        </aside>
+
+        <div class="desktop-icons" aria-label="Desktop shortcuts">
+          <button class="desktop-icon" data-open="focusPanel">
+            <span class="icon-art icon-offline" aria-hidden="true">◒</span>
+            <span>Go Offline</span>
+          </button>
+          <button class="desktop-icon" data-open="routinePanel">
+            <span class="icon-art icon-calendar" aria-hidden="true">27</span>
+            <span>Routines</span>
+          </button>
+          <button class="desktop-icon" data-open="settingsPanel">
+            <span class="icon-art icon-settings" aria-hidden="true">✦</span>
+            <span>My Settings</span>
+          </button>
+        </div>
+      </section>
+
+      <footer class="taskbar">
+        <button class="start-button" data-open="aboutPanel"><span>BC</span> start living</button>
+        <div class="taskbar-message"><span aria-hidden="true">☻</span> You are more than your screen time.</div>
+        <time id="clock" aria-label="Current time"></time>
+      </footer>
+    </main>
+
+    <section class="panel-backdrop" id="panelBackdrop" aria-hidden="true">
+      <div class="panel app-window pixel-border" id="focusPanel" role="dialog" aria-modal="true" aria-labelledby="focusTitle" hidden>
+        <div class="title-bar">
+          <span id="focusTitle">GO_OFFLINE.EXE</span>
+          <button class="window-close" data-close aria-label="Close focus timer">×</button>
+        </div>
+        <div class="panel-body focus-body">
+          <p class="eyebrow">A TINY PORTAL OUT OF HERE</p>
+          <div class="timer-ring" id="timerRing">
+            <div>
+              <span id="timerDisplay">25:00</span>
+              <small id="timerLabel">READY WHEN YOU ARE</small>
+            </div>
+          </div>
+          <label class="field-label" for="focusRoutine">What are you logging off for?</label>
+          <select id="focusRoutine">
+            <option value="A quiet walk">A quiet walk</option>
+            <option value="Make something">Make something</option>
+            <option value="Read a few pages">Read a few pages</option>
+            <option value="Call someone I love">Call someone I love</option>
+            <option value="Do absolutely nothing">Do absolutely nothing</option>
+          </select>
+          <div class="duration-buttons" aria-label="Focus duration">
+            <button data-minutes="10">10 min</button>
+            <button data-minutes="25" class="is-selected">25 min</button>
+            <button data-minutes="45">45 min</button>
+          </div>
+          <div class="timer-actions">
+            <button class="primary-button" id="startTimer">Start living</button>
+            <button class="secondary-button" id="resetTimer">Reset</button>
+          </div>
+          <p class="honesty-note centered">Keep this tab open for the timer. We cannot lock or block other apps on your phone.</p>
+        </div>
+      </div>
+
+      <div class="panel app-window pixel-border" id="routinePanel" role="dialog" aria-modal="true" aria-labelledby="routineTitle" hidden>
+        <div class="title-bar title-bar-pink">
+          <span id="routineTitle">SCHEDULE_A_ROUTINE.DAT</span>
+          <button class="window-close" data-close aria-label="Close routine scheduler">×</button>
+        </div>
+        <form class="panel-body" id="routineForm">
+          <p class="eyebrow">MAKE A DATE WITH REAL LIFE</p>
+          <label class="field-label" for="routineName">Routine name</label>
+          <input id="routineName" name="routineName" required maxlength="50" placeholder="Sunday morning wander" />
+          <div class="field-grid">
+            <div>
+              <label class="field-label" for="routineDay">Day</label>
+              <select id="routineDay" name="routineDay">
+                <option>Today</option><option>Tomorrow</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="routineTime">Time</label>
+              <input id="routineTime" name="routineTime" type="time" value="18:00" required />
+            </div>
+          </div>
+          <label class="field-label" for="routineMood">Mood</label>
+          <select id="routineMood" name="routineMood">
+            <option value="☀">Sunshine</option><option value="✿">Soft</option><option value="♪">Playful</option><option value="☕">Cozy</option><option value="✦">Surprise me</option>
+          </select>
+          <button class="primary-button full-button" type="submit">Save this little life</button>
+          <div class="saved-routines" id="savedRoutines" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div class="panel app-window pixel-border" id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
+        <div class="title-bar title-bar-green">
+          <span id="settingsTitle">MY_SETTINGS.CFG</span>
+          <button class="window-close" data-close aria-label="Close settings">×</button>
+        </div>
+        <form class="panel-body settings-body" id="settingsForm">
+          <p class="eyebrow">MAKE THE DESKTOP YOURS</p>
+          <fieldset>
+            <legend>Wallpaper mood</legend>
+            <label><input type="radio" name="theme" value="violet" checked /> Violet hour</label>
+            <label><input type="radio" name="theme" value="peach" /> Peach sunrise</label>
+            <label><input type="radio" name="theme" value="mint" /> Mint condition</label>
+          </fieldset>
+          <label class="toggle-row"><span><strong>Gentle sounds</strong><small>Play a tiny chime when a timer ends</small></span><input id="soundToggle" type="checkbox" checked /></label>
+          <label class="toggle-row"><span><strong>Reduce motion</strong><small>Quiet the floating desktop animations</small></span><input id="motionToggle" type="checkbox" /></label>
+          <button class="primary-button full-button" type="submit">Save settings</button>
+          <p class="form-status" id="settingsStatus" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="panel app-window pixel-border" id="aboutPanel" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" hidden>
+        <div class="title-bar">
+          <span id="aboutTitle">ABOUT_BUSINESS_CASUAL.TXT</span>
+          <button class="window-close" data-close aria-label="Close about window">×</button>
+        </div>
+        <div class="panel-body about-body">
+          <div class="big-smiley" aria-hidden="true">☺</div>
+          <h2>The best connection might be offline.</h2>
+          <p>Business Casual is an NFC-powered ritual for people who miss being unavailable. Tap, choose an intention, and leave the feed behind for a while.</p>
+          <button class="primary-button" data-switch="focusPanel">Try it now</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
