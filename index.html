@@ -50,6 +50,7 @@
 
       <div class="desktop-shortcuts">
         <button data-open="storyPanel"><span>💌</span>Our Story</button>
+        <button data-open="momentsPanel"><span>🌙</span>Time Away</button>
         <button data-open="helpPanel"><span>❔</span>Help</button>
       </div>
 
@@ -92,6 +93,12 @@
           <div class="timer-display" id="timerDisplay">25:00</div>
           <p class="timer-message" id="timerMessage">Ready when you are.</p>
           <div class="modal-actions"><button class="hot-button" id="startTimer">START TIMER</button><button id="resetTimer">Reset</button></div>
+          <section class="completion-log" id="completionLog" hidden>
+            <p class="modal-kicker">WELCOME BACK</p>
+            <label for="momentNote">What did you do with your time away?</label>
+            <input id="momentNote" maxlength="140" placeholder="Went for a walk, made dinner, called a friend..." />
+            <button class="hot-button" id="saveMoment">SAVE THIS MOMENT</button>
+          </section>
           <p class="browser-note">This timer stays in your browser. To silence notifications or start music when you tap your piece, create a custom Apple Shortcut.</p>
         </div>
       </section>
@@ -114,6 +121,15 @@
         <div class="story-shell"><p class="script-heading">Made in the in-between.</p><h2>Business Casual began during the hardest season of my life.</h2><p>I moved home to care for my mom after she was diagnosed with ALS. As she needed full-time care, traditional work stopped fitting into our life.</p><p>I started making jewelry because I could pick it up between caregiving moments and put it down the second she needed me. During that same season, I realized how badly I needed space from my phone.</p><blockquote>Business Casual came from combining those two needs: making something expressive with my hands and finding a physical way back to the life happening around me.</blockquote><p>This piece is not here to tell you how to live. It is a small invitation to choose.</p><div class="story-signoff">Made by hand to bring you back to your life. ♡</div></div>
       </section>
 
+      <section class="app-modal classic-window" id="momentsPanel" role="dialog" aria-modal="true" aria-labelledby="momentsTitle" hidden>
+        <div class="window-bar"><span id="momentsTitle">Time Away</span><button data-close aria-label="Close">×</button></div>
+        <div class="modal-body">
+          <p class="modal-kicker">LITTLE THINGS THAT HAPPENED OFFLINE</p>
+          <div class="session-history" id="momentsList"></div>
+          <p class="browser-note">Saved privately in this browser.</p>
+        </div>
+      </section>
+
       <section class="app-modal classic-window" id="helpPanel" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
         <div class="window-bar"><span id="helpTitle">Help</span><button data-close aria-label="Close">×</button></div>
         <div class="modal-body help-body"><p class="modal-kicker">TAPPING YOUR PIECE</p><ol><li>Unlock your phone and keep the screen awake.</li><li>Hold the NFC area near the top back of the phone for a few seconds.</li><li>Tap the notification that appears.</li></ol><p>Thick or magnetic cases and nearby metal can interfere. Try removing the case or moving the piece slightly.</p><p><b>Nothing here changes your phone without your permission.</b> Focus modes and blocking apps require their own one-time setup.</p></div>
@@ -121,7 +137,7 @@
 
       <section class="app-modal classic-window" id="startPanel" role="dialog" aria-modal="true" aria-labelledby="startTitle" hidden>
         <div class="window-bar"><span id="startTitle">Start</span><button data-close aria-label="Close">×</button></div>
-        <div class="start-menu"><button data-open="focusPanel">⏱ Timer</button><button data-open="keyPanel">⌁ Create a Custom Shortcut</button><button data-open="storyPanel">💌 About My Piece</button><button data-open="helpPanel">❔ Help</button></div>
+        <div class="start-menu"><button data-open="focusPanel">⏱ Timer</button><button data-open="keyPanel">⌁ Create a Custom Shortcut</button><button data-open="momentsPanel">🌙 Time Away</button><button data-open="storyPanel">💌 About My Piece</button><button data-open="helpPanel">❔ Help</button></div>
       </section>
     </div>
 

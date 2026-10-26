@@ -5,9 +5,16 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-    return { introSeen: Boolean(saved.introSeen) };
+    const oldSessions = Array.isArray(saved.sessions) ? saved.sessions : [];
+    const moments = Array.isArray(saved.moments) ? saved.moments : oldSessions.map((session) => ({
+      id: session.id || String(Date.now()),
+      note: session.intention || session.routine || 'Time away',
+      minutes: session.minutes || 0,
+      date: session.date || ''
+    }));
+    return { introSeen: Boolean(saved.introSeen), moments };
   } catch {
-    return { introSeen: false };
+    return { introSeen: false, moments: [] };
   }
 }
 
@@ -56,6 +63,7 @@ function openPanel(id) {
   previousFocus = document.activeElement;
   $$('.app-modal').forEach((item) => { item.hidden = true; });
   panel.hidden = false;
+  if (id === 'momentsPanel') renderMoments();
   $('#modalLayer').classList.add('is-open');
   $('#modalLayer').setAttribute('aria-hidden', 'false');
   setTimeout(() => panel.querySelector('button,input,select')?.focus(), 40);
@@ -84,7 +92,11 @@ function updateTimer() {
 }
 
 function toggleTimer() {
-  if (timer.remaining <= 0) timer.remaining = timer.duration;
+  if (timer.remaining <= 0) {
+    timer.remaining = timer.duration;
+    $('#completionLog').hidden = true;
+    $('#momentNote').value = '';
+  }
   timer.running = !timer.running;
   clearInterval(timer.interval);
   if (timer.running) {
@@ -103,7 +115,10 @@ function completeSession() {
   clearInterval(timer.interval);
   timer.running = false;
   timer.remaining = 0;
-  showToast('Timer complete.');
+  timer.startedAt = null;
+  $('#completionLog').hidden = false;
+  showToast('Welcome back. What did you do?');
+  setTimeout(() => $('#momentNote').focus(), 100);
 }
 
 function resetTimer() {
@@ -111,7 +126,40 @@ function resetTimer() {
   timer.running = false;
   timer.startedAt = null;
   timer.remaining = timer.duration;
+  $('#completionLog').hidden = true;
+  $('#momentNote').value = '';
   updateTimer();
+}
+
+function escapeHTML(value) {
+  const span = document.createElement('span');
+  span.textContent = value;
+  return span.innerHTML;
+}
+
+function renderMoments() {
+  $('#momentsList').innerHTML = state.moments.length ? state.moments.map((moment) => `<article><span>${escapeHTML(moment.date)}</span><b>${escapeHTML(moment.note)}</b><p>${moment.minutes} minutes away</p></article>`).join('') : '<div class="empty-history"><span>🌙</span><p>Your time away will appear here after you finish a timer.</p></div>';
+}
+
+function saveMoment() {
+  const note = $('#momentNote').value.trim();
+  if (!note) {
+    showToast('Write one little thing you did.');
+    $('#momentNote').focus();
+    return;
+  }
+  state.moments.unshift({
+    id: String(Date.now()),
+    note,
+    minutes: Math.round(timer.duration / 60),
+    date: new Intl.DateTimeFormat([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date())
+  });
+  state.moments = state.moments.slice(0, 50);
+  saveState();
+  renderMoments();
+  $('#completionLog').hidden = true;
+  $('#momentNote').value = '';
+  showToast('Saved to Time Away.');
 }
 
 function updateClock() { $('#clock').textContent = new Intl.DateTimeFormat([], { hour: 'numeric', minute: '2-digit' }).format(new Date()); }
@@ -132,7 +180,10 @@ $$('[data-minutes]').forEach((button) => button.addEventListener('click', () => 
 }));
 $('#startTimer').addEventListener('click', toggleTimer);
 $('#resetTimer').addEventListener('click', resetTimer);
+$('#saveMoment').addEventListener('click', saveMoment);
+$('#momentNote').addEventListener('keydown', (event) => { if (event.key === 'Enter') saveMoment(); });
 
+renderMoments();
 updateTimer();
 updateClock();
 setInterval(updateClock, 30000);
