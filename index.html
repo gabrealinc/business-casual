@@ -50,7 +50,6 @@
 
       <div class="desktop-shortcuts">
         <button data-open="storyPanel"><span>💌</span>Our Story</button>
-        <button data-open="historyPanel"><span>📔</span>My Moments</button>
         <button data-open="helpPanel"><span>❔</span>Help</button>
       </div>
 
@@ -62,7 +61,7 @@
 
       <aside class="status-window classic-window">
         <div class="window-bar"><span>Current Status</span><span>×</span></div>
-        <div class="status-content"><span>🌐</span><strong id="systemStatus">ONLINE</strong><button data-open="focusPanel">&gt;&gt; GO OFFLINE</button></div>
+        <div class="status-content"><span>🌐</span><strong id="systemStatus">ONLINE</strong><button data-open="focusPanel">&gt;&gt; START TIMER</button></div>
       </aside>
 
       <section class="choice-window classic-window" aria-labelledby="choiceTitle">
@@ -70,18 +69,13 @@
         <div class="choice-grid">
           <button class="choice-card" data-open="focusPanel">
             <span class="choice-image offline-image"><i></i></span>
-            <strong>GO OFFLINE</strong>
-            <small>Start a quiet timer.<br />Come back to your life.</small>
+            <strong>TIMER</strong>
+            <small>Choose a length.<br />Take some time back.</small>
           </button>
           <button class="choice-card" data-open="keyPanel">
             <span class="choice-image key-image">⌁</span>
-            <strong>CUSTOMIZE<br />MY TAP</strong>
-            <small>Choose Focus, blocking,<br />a link, or a routine.</small>
-          </button>
-          <button class="choice-card" data-open="storyPanel">
-            <span class="choice-image mine-image">♡</span>
-            <strong>ABOUT<br />MY PIECE</strong>
-            <small>Why it was made<br />and how to use it.</small>
+            <strong>CREATE A<br />CUSTOM SHORTCUT</strong>
+            <small>Turn on Focus, play music,<br />or do both with one tap.</small>
           </button>
         </div>
       </section>
@@ -91,41 +85,33 @@
 
     <div class="modal-layer" id="modalLayer" aria-hidden="true">
       <section class="app-modal classic-window" id="focusPanel" role="dialog" aria-modal="true" aria-labelledby="focusTitle" hidden>
-        <div class="window-bar"><span id="focusTitle">Go Offline</span><button data-close aria-label="Close">×</button></div>
+        <div class="window-bar"><span id="focusTitle">Timer</span><button data-close aria-label="Close">×</button></div>
         <div class="modal-body timer-body">
-          <p class="modal-kicker">WHAT ARE YOU COMING BACK TO?</p>
-          <select id="focusRoutine"><option>Be with someone I love</option><option>Make something</option><option>Study with intention</option><option>Move my body</option><option>Read a few pages</option><option>Rest without earning it</option><option>Do absolutely nothing</option></select>
-          <label for="intention">One small intention <span>(optional)</span></label>
-          <input id="intention" maxlength="90" placeholder="Put my phone down and be here" />
+          <p class="modal-kicker">HOW LONG DO YOU WANT?</p>
           <div class="duration-row"><button data-minutes="10">10 min</button><button data-minutes="25" class="is-selected">25 min</button><button data-minutes="45">45 min</button></div>
           <div class="timer-display" id="timerDisplay">25:00</div>
           <p class="timer-message" id="timerMessage">Ready when you are.</p>
-          <div class="modal-actions"><button class="hot-button" id="startTimer">START LIVING</button><button id="resetTimer">Reset</button></div>
-          <p class="browser-note"><b>Honest note:</b> this timer creates a ritual, but a website cannot silence or block other apps. Choose “Customize My Tap” to connect your piece to tools that can.</p>
+          <div class="modal-actions"><button class="hot-button" id="startTimer">START TIMER</button><button id="resetTimer">Reset</button></div>
+          <p class="browser-note">This timer stays in your browser. To silence notifications or start music when you tap your piece, create a custom Apple Shortcut.</p>
         </div>
       </section>
 
       <section class="app-modal wide-modal classic-window" id="keyPanel" role="dialog" aria-modal="true" aria-labelledby="keyTitle" hidden>
-        <div class="window-bar"><span id="keyTitle">Customize My Tap</span><button data-close aria-label="Close">×</button></div>
+        <div class="window-bar"><span id="keyTitle">Create a Custom Shortcut</span><button data-close aria-label="Close">×</button></div>
         <div class="guide-shell">
-          <header><p class="eyebrow">MAKE THIS PIECE YOURS</p><h2>What should your tap do?</h2><p>Choose something simple, build a phone boundary, or create a routine that helps you be more present.</p></header>
-          <div class="path-grid">
-            <article><span class="path-number">01</span><div class="path-icon">☾</div><h3>Silence notifications</h3><p>Use Apple Shortcuts to recognize this necklace and turn on a Focus whenever you scan it.</p><button data-guide="focus">SHOW FOCUS SETUP</button><small>Free · iPhone · about 2 minutes</small></article>
-            <article><span class="path-number">02</span><div class="path-icon">▣</div><h3>Block distracting apps</h3><p>Use a compatible Screen Time app that accepts an NFC tag as the physical start or stop key.</p><button data-guide="block">SHOW BLOCKING SETUP</button><small>Third-party app required</small></article>
-            <article><span class="path-number">03</span><div class="path-icon">↗</div><h3>Build any routine</h3><p>Start a playlist, open a journal, text someone, or combine several actions in Shortcuts.</p><button data-guide="routine">SEE ROUTINE IDEAS</button><small>Free · the most flexible</small></article>
+          <header><p class="eyebrow">MAKE THIS PIECE YOURS</p><h2>One tap. Your Focus. Your music.</h2><p>Apple Shortcuts can recognize your piece and run the actions you choose whenever you tap it.</p></header>
+          <div class="guide-detail shortcut-guide">
+            <h3>Set up your custom shortcut</h3>
+            <ol><li>Open Apple’s <b>Shortcuts</b> app and tap <b>Automation</b>.</li><li>Create a new Personal Automation and choose <b>NFC</b>.</li><li>Scan this piece and name it “Business Casual.”</li><li>Add <b>Set Focus</b>, <b>Play Music</b>, or both.</li><li>Choose <b>Run Immediately</b>, then save and test your tap.</li></ol>
+            <p>Your Business Casual link can stay on the tag. Shortcuts recognizes the physical piece itself.</p>
+            <p class="fine-print">Focus silences notifications, but it does not prevent you from opening apps.</p>
           </div>
-          <div class="guide-detail" id="guideDetail"><p>Choose a path above. Your original Business Casual link can stay on the tag while Shortcuts recognizes the tag itself.</p></div>
         </div>
       </section>
 
       <section class="app-modal story-modal classic-window" id="storyPanel" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
         <div class="window-bar"><span id="storyTitle">Why This Exists.txt</span><button data-close aria-label="Close">×</button></div>
         <div class="story-shell"><p class="script-heading">Made in the in-between.</p><h2>Business Casual began during the hardest season of my life.</h2><p>I moved home to care for my mom after she was diagnosed with ALS. As she needed full-time care, traditional work stopped fitting into our life.</p><p>I started making jewelry because I could pick it up between caregiving moments and put it down the second she needed me. During that same season, I realized how badly I needed space from my phone.</p><blockquote>Business Casual came from combining those two needs: making something expressive with my hands and finding a physical way back to the life happening around me.</blockquote><p>This piece is not here to tell you how to live. It is a small invitation to choose.</p><div class="story-signoff">Made by hand to bring you back to your life. ♡</div></div>
-      </section>
-
-      <section class="app-modal classic-window" id="historyPanel" role="dialog" aria-modal="true" aria-labelledby="historyTitle" hidden>
-        <div class="window-bar"><span id="historyTitle">My Moments</span><button data-close aria-label="Close">×</button></div>
-        <div class="modal-body"><p class="modal-kicker">SAVED ONLY IN THIS BROWSER</p><div id="sessionHistory" class="session-history"></div><button class="text-button" id="clearHistory">Clear my history</button></div>
       </section>
 
       <section class="app-modal classic-window" id="helpPanel" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
@@ -135,7 +121,7 @@
 
       <section class="app-modal classic-window" id="startPanel" role="dialog" aria-modal="true" aria-labelledby="startTitle" hidden>
         <div class="window-bar"><span id="startTitle">Start</span><button data-close aria-label="Close">×</button></div>
-        <div class="start-menu"><button data-open="focusPanel">🌴 Go Offline</button><button data-open="keyPanel">🔑 Customize My Tap</button><button data-open="historyPanel">📔 My Moments</button><button data-open="storyPanel">💌 About My Piece</button><button data-open="helpPanel">❔ Help</button></div>
+        <div class="start-menu"><button data-open="focusPanel">⏱ Timer</button><button data-open="keyPanel">⌁ Create a Custom Shortcut</button><button data-open="storyPanel">💌 About My Piece</button><button data-open="helpPanel">❔ Help</button></div>
       </section>
     </div>
 
