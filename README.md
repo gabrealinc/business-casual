@@ -1,6 +1,6 @@
 # Business Casual
 
-An animated, nostalgic Y2K NFC landing experience for choosing a little offline time.
+An animated, nostalgic Y2K NFC landing experience for choosing a little offline time. It opens with a cinematic, AOL-inspired connection sequence and lands on a simple three-choice desktop.
 
 ## What it does
 
