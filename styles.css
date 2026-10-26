@@ -16,3 +16,6 @@
 @media(max-width:700px){.site-nav>p{display:none}.site-nav>div button:first-child{display:none}.path-grid{grid-template-columns:1fr}.path-grid article{min-height:0}.guide-shell header h2{font-size:34px}}
 .desktop-heading p,.bc-wordmark span,.script-heading,.story-title span,.story-signoff{font-family:'Caveat',cursive;font-weight:700}
 .invitation-copy{margin-top:14px;font:700 11px 'DM Mono',monospace;letter-spacing:.12em}
+.path-grid{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.path-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.path-grid{grid-template-columns:1fr}}
