@@ -1,31 +1,22 @@
-const STORAGE_KEY = 'business-casual-v3';
-const defaultState = { routines: [], journal: [], cart: [], preferences: { intro: true, sound: true, reduceMotion: false } };
+const STORAGE_KEY = 'business-casual-tap-v1';
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-    return {
-      ...defaultState,
-      ...saved,
-      preferences: { ...defaultState.preferences, ...(saved.preferences || {}) },
-      routines: Array.isArray(saved.routines) ? saved.routines : [],
-      journal: Array.isArray(saved.journal) ? saved.journal : [],
-      cart: Array.isArray(saved.cart) ? saved.cart : []
-    };
+    return { introSeen: Boolean(saved.introSeen), sessions: Array.isArray(saved.sessions) ? saved.sessions : [] };
   } catch {
-    return JSON.parse(JSON.stringify(defaultState));
+    return { introSeen: false, sessions: [] };
   }
 }
 
 let state = loadState();
-let connectionInterval;
-let previousFocus;
+let introTimer;
 let hideTimer;
+let previousFocus;
 let toastTimer;
-let introComplete = false;
-let timer = { duration: 25 * 60, remaining: 25 * 60, running: false, interval: null };
+let timer = { duration: 25 * 60, remaining: 25 * 60, running: false, interval: null, startedAt: null };
 const saveState = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 
 function setConnectionStep(step) {
@@ -34,31 +25,47 @@ function setConnectionStep(step) {
   $$('.connect-card').forEach((card, index) => card.classList.toggle('is-active', index === current));
   $$('.flow-arrow').forEach((arrow, index) => arrow.classList.toggle('is-lit', index < current));
   $$('.step-dots i').forEach((dot, index) => dot.classList.toggle('is-active', index === current));
-  document.title = `Business Casual – ${['Dialing...', 'Authenticating...', 'Connected!', 'Welcome!'][current]}`;
 }
 
 function startConnection() {
-  setConnectionStep(0);
-  let dial = 8;
-  const dialTick = setInterval(() => {
-    dial = Math.min(100, dial + 17);
-    $('#dialProgress').style.width = `${dial}%`;
-    if (dial > 35) $('#dialStatus').textContent = dial < 80 ? 'Negotiating...' : 'Almost there...';
-    if (dial >= 100) clearInterval(dialTick);
-  }, 350);
-  const timings = state.preferences.reduceMotion ? [250, 600, 950] : [2500, 5100, 7500];
-  timings.forEach((delay, index) => setTimeout(() => setConnectionStep(index + 1), delay));
-  connectionInterval = setTimeout(enterDesktop, state.preferences.reduceMotion ? 1350 : 9800);
+  let progress = 8;
+  const progressTimer = setInterval(() => {
+    progress = Math.min(100, progress + 17);
+    $('#dialProgress').style.width = `${progress}%`;
+    if (progress > 35) $('#dialStatus').textContent = progress < 80 ? 'Recognizing...' : 'Almost there...';
+    if (progress >= 100) clearInterval(progressTimer);
+  }, 300);
+  [2100, 4200, 6200].forEach((delay, index) => setTimeout(() => setConnectionStep(index + 1), delay));
+  introTimer = setTimeout(enterDesktop, 8500);
 }
 
 function enterDesktop() {
-  clearTimeout(connectionInterval);
+  clearTimeout(introTimer);
+  state.introSeen = true;
+  saveState();
   $('#connectionScreen').classList.add('is-gone');
   $('#desktop').classList.add('is-ready');
   $('#desktop').setAttribute('aria-hidden', 'false');
-  introComplete = true;
-  document.title = 'Business Casual – Log off. Live more.';
-  openHashPanel();
+  document.title = 'Business Casual – Tap to get real';
+}
+
+function openPanel(id) {
+  const panel = document.getElementById(id);
+  if (!panel) return;
+  clearTimeout(hideTimer);
+  previousFocus = document.activeElement;
+  $$('.app-modal').forEach((item) => { item.hidden = true; });
+  panel.hidden = false;
+  $('#modalLayer').classList.add('is-open');
+  $('#modalLayer').setAttribute('aria-hidden', 'false');
+  setTimeout(() => panel.querySelector('button,input,select')?.focus(), 40);
+}
+
+function closePanel() {
+  $('#modalLayer').classList.remove('is-open');
+  $('#modalLayer').setAttribute('aria-hidden', 'true');
+  hideTimer = setTimeout(() => $$('.app-modal').forEach((panel) => { panel.hidden = true; }), 200);
+  previousFocus?.focus?.();
 }
 
 function showToast(message) {
@@ -68,85 +75,9 @@ function showToast(message) {
   toastTimer = setTimeout(() => $('#toast').classList.remove('is-visible'), 2600);
 }
 
-function openPanel(id, updateHash = true) {
-  const panel = document.getElementById(id);
-  if (!panel) return;
-  clearTimeout(hideTimer);
-  previousFocus = document.activeElement;
-  $$('.app-modal').forEach((item) => { item.hidden = true; });
-  panel.hidden = false;
-  $('#modalLayer').classList.add('is-open');
-  $('#modalLayer').setAttribute('aria-hidden', 'false');
-  if (updateHash) history.replaceState(null, '', `#${id.replace('Panel', '')}`);
-  setTimeout(() => panel.querySelector('button,input,select,textarea')?.focus(), 50);
-}
-
-function closePanel() {
-  $('#modalLayer').classList.remove('is-open');
-  $('#modalLayer').setAttribute('aria-hidden', 'true');
-  history.replaceState(null, '', location.pathname + location.search);
-  hideTimer = setTimeout(() => $$('.app-modal').forEach((panel) => { panel.hidden = true; }), 220);
-  previousFocus?.focus?.();
-}
-
-function openHashPanel() {
-  if (!introComplete) return;
-  const map = { shop: 'shopPanel', how: 'howPanel', story: 'storyPanel', setup: 'setupPanel', impact: 'impactPanel', journal: 'journalPanel' };
-  const id = map[location.hash.slice(1)];
-  if (id) openPanel(id, false);
-}
-
-function escapeHTML(value) {
-  const span = document.createElement('span');
-  span.textContent = value;
-  return span.innerHTML;
-}
-
-function formatTime(value) {
-  const [hours, minutes] = value.split(':').map(Number);
-  return new Intl.DateTimeFormat([], { hour: 'numeric', minute: '2-digit' }).format(new Date(2000, 0, 1, hours, minutes));
-}
-
-function renderRoutines() {
-  $$('.saved-option').forEach((option) => option.remove());
-  state.routines.forEach((routine) => {
-    const option = document.createElement('option');
-    option.className = 'saved-option';
-    option.textContent = routine.name;
-    $('#focusRoutine').append(option);
-  });
-  $('#savedRoutines').innerHTML = state.routines.map((routine) => `<div class="saved-routine"><span><b>${escapeHTML(routine.name)}</b><br><small>${escapeHTML(routine.day)} at ${formatTime(routine.time)}</small></span><button type="button" data-delete="${routine.id}" aria-label="Delete ${escapeHTML(routine.name)}">×</button></div>`).join('');
-}
-
-function renderCart() {
-  const items = $('#cartItems');
-  items.innerHTML = state.cart.length ? state.cart.map((item) => `<div class="cart-item"><span>${escapeHTML(item.name)}<br><b>$${item.price}</b></span><button data-remove="${escapeHTML(item.name)}" aria-label="Remove ${escapeHTML(item.name)}">×</button></div>`).join('') : '<p class="empty-cart">Nothing saved yet. Choose what feels like you.</p>';
-  $('#cartTotal').textContent = `$${state.cart.reduce((sum, item) => sum + item.price, 0)}`;
-  $$('.add-button').forEach((button) => {
-    const added = state.cart.some((item) => item.name === button.dataset.add);
-    button.classList.toggle('is-added', added);
-    button.textContent = added ? 'SAVED TO DROP LIST ✓' : 'ADD TO DROP LIST';
-  });
-}
-
-function renderJournal() {
-  $('#journalHistory').innerHTML = state.journal.length ? `<p class="modal-kicker">RECENT CHECK-INS</p>${state.journal.slice(0, 3).map((entry) => `<div class="journal-entry"><b>${escapeHTML(entry.trigger)}</b> · ${escapeHTML(entry.date)}${entry.need ? `<br>${escapeHTML(entry.need)}` : ''}</div>`).join('')}` : '';
-}
-
-const setupCopy = {
-  ritual: '<h3>Open Business Casual</h3><ol><li>Open the NFC-writing app recommended in your care card.</li><li>Write the Business Casual URL to the piece.</li><li>Tap the piece whenever you want to start a timer, routine, or check-in.</li></ol><p>This creates an intentional pause. It does not block other apps.</p>',
-  block: '<h3>Connect a compatible blocker</h3><ol><li>Choose a third-party blocking app that supports NFC automations.</li><li>Follow that app’s instructions and grant its required permissions.</li><li>Use your removable Business Casual piece as the physical key.</li></ol><p>Compatibility and subscription costs depend on the app. Business Casual does not yet provide native phone blocking.</p>',
-  custom: '<h3>Program your own link</h3><ol><li>Choose a safe HTTPS link, playlist, journal prompt, contact, or shortcut.</li><li>Use an NFC-writing app to replace the existing link.</li><li>Test the piece before relying on it.</li></ol><p>The tag is rewritable. We will include the exact tag type and step-by-step care card with every tested piece.</p>'
-};
-
-function setSetupTab(name) {
-  $$('.setup-tabs button').forEach((button) => button.classList.toggle('is-selected', button.dataset.setupTab === name));
-  $('#setupContent').innerHTML = setupCopy[name];
-}
-
 function updateTimer() {
   $('#timerDisplay').textContent = `${String(Math.floor(timer.remaining / 60)).padStart(2, '0')}:${String(timer.remaining % 60).padStart(2, '0')}`;
-  $('#timerMessage').textContent = timer.running ? `Living: ${$('#focusRoutine').value}` : timer.remaining === 0 ? 'Welcome back.' : 'Ready when you are.';
+  $('#timerMessage').textContent = timer.running ? `Coming back to: ${$('#focusRoutine').value}` : timer.remaining === 0 ? 'Welcome back.' : 'Ready when you are.';
   $('#startTimer').textContent = timer.running ? 'PAUSE' : timer.remaining === 0 ? 'START AGAIN' : 'START LIVING';
   $('#systemStatus').textContent = timer.running ? 'LIVING LIFE' : 'ONLINE';
   document.body.classList.toggle('is-focusing', timer.running);
@@ -157,41 +88,60 @@ function toggleTimer() {
   timer.running = !timer.running;
   clearInterval(timer.interval);
   if (timer.running) {
-    showToast(`Logging off for: ${$('#focusRoutine').value}`);
+    timer.startedAt ||= Date.now();
+    showToast('Your time is yours.');
     timer.interval = setInterval(() => {
       timer.remaining -= 1;
-      if (timer.remaining <= 0) finishTimer();
+      if (timer.remaining <= 0) completeSession();
       updateTimer();
     }, 1000);
   }
   updateTimer();
 }
 
-function resetTimer() { clearInterval(timer.interval); timer.running = false; timer.remaining = timer.duration; updateTimer(); }
-function finishTimer() { clearInterval(timer.interval); timer.running = false; timer.remaining = 0; showToast('Welcome back. Hope real life was nice.'); if (state.preferences.sound) playChime(); }
-function playChime() {
-  try {
-    const audio = new AudioContext();
-    [523, 659, 784].forEach((frequency, index) => {
-      const oscillator = audio.createOscillator();
-      const gain = audio.createGain();
-      oscillator.connect(gain).connect(audio.destination);
-      oscillator.frequency.value = frequency;
-      gain.gain.setValueAtTime(.001, audio.currentTime + index * .12);
-      gain.gain.exponentialRampToValueAtTime(.12, audio.currentTime + index * .12 + .02);
-      gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + index * .12 + .28);
-      oscillator.start(audio.currentTime + index * .12);
-      oscillator.stop(audio.currentTime + index * .12 + .3);
-    });
-  } catch {}
+function completeSession() {
+  clearInterval(timer.interval);
+  timer.running = false;
+  timer.remaining = 0;
+  state.sessions.unshift({
+    id: String(Date.now()),
+    routine: $('#focusRoutine').value,
+    intention: $('#intention').value.trim(),
+    minutes: Math.round(timer.duration / 60),
+    date: new Intl.DateTimeFormat([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date())
+  });
+  state.sessions = state.sessions.slice(0, 20);
+  saveState();
+  renderHistory();
+  showToast('Welcome back. This moment was saved.');
 }
 
-function applyPreferences() {
-  $('#introToggle').checked = state.preferences.intro;
-  $('#soundToggle').checked = state.preferences.sound;
-  $('#motionToggle').checked = state.preferences.reduceMotion;
-  document.body.classList.toggle('reduce-motion', state.preferences.reduceMotion);
+function resetTimer() {
+  clearInterval(timer.interval);
+  timer.running = false;
+  timer.startedAt = null;
+  timer.remaining = timer.duration;
+  updateTimer();
 }
+
+function escapeHTML(value) {
+  const span = document.createElement('span');
+  span.textContent = value;
+  return span.innerHTML;
+}
+
+function renderHistory() {
+  $('#sessionHistory').innerHTML = state.sessions.length ? state.sessions.map((session) => `<article><span>${escapeHTML(session.date)}</span><b>${escapeHTML(session.routine)}</b><p>${session.minutes} minutes${session.intention ? ` · ${escapeHTML(session.intention)}` : ''}</p></article>`).join('') : '<div class="empty-history"><span>🌙</span><p>Your quiet moments will appear here after you complete a timer.</p></div>';
+}
+
+const guideCopy = {
+  focus: `<h3>Use the necklace to turn on Focus</h3><ol><li>Open Apple’s <b>Shortcuts</b> app and tap <b>Automation</b>.</li><li>Create a new Personal Automation and choose <b>NFC</b>.</li><li>Scan this piece and name it “Business Casual.”</li><li>Add the <b>Set Focus</b> action and choose Do Not Disturb or a custom Focus.</li><li>Choose the automatic running option available on your phone, then save.</li></ol><p>Shortcuts recognizes the physical tag, so the Business Casual website can remain written on it.</p>`,
+  block: `<h3>Use the necklace with an app blocker</h3><p>A Focus silences notifications but does not stop you from opening apps. For stronger boundaries, use a compatible Screen Time app such as Foqos.</p><ol><li>Install the blocker and grant only the permissions you understand.</li><li>Select the apps and sites you want it to restrict.</li><li>Follow its NFC setup and scan this piece as the physical key.</li><li>Test how sessions start and end before relying on it.</li></ol><a class="guide-link" href="https://www.foqos.app/" target="_blank" rel="noreferrer">VISIT FOQOS ↗</a><p class="fine-print">Business Casual is not affiliated with Foqos. Compatibility, features, and pricing can change.</p>`,
+  routine: `<h3>Ideas for your tap</h3><div class="idea-chips"><span>Study + playlist</span><span>Sunset walk</span><span>Journal mode</span><span>Dinner mode</span><span>Call someone I love</span><span>Creative hour</span><span>Caregiving presence</span><span>Bedtime wind-down</span></div><p>In Shortcuts, one NFC scan can run several actions. Start small with one action, test it, then add more.</p>`,
+  rewrite: `<h3>Replace the Business Casual link</h3><ol><li>Copy and save <b>${location.origin}/tap</b> in case you want it back later.</li><li>Open a trusted NFC-writing app such as NFC Tools.</li><li>Choose <b>Write</b>, add your link, and scan the NFC area of the piece.</li><li>Test the new tap before closing the app.</li></ol><p><b>Keep the tag rewritable.</b> Do not choose “lock” or “make read-only” unless you are certain. Rewriting the tag removes this website until you write the Business Casual link back.</p><button id="copyGuideUrl" class="copy-button">COPY BUSINESS CASUAL LINK</button>`
+};
+
+function updateClock() { $('#clock').textContent = new Intl.DateTimeFormat([], { hour: 'numeric', minute: '2-digit' }).format(new Date()); }
 
 $('#skipConnection').addEventListener('click', enterDesktop);
 $('#enterDesktop').addEventListener('click', enterDesktop);
@@ -200,7 +150,6 @@ $$('[data-close]').forEach((button) => button.addEventListener('click', closePan
 $$('[data-home]').forEach((button) => button.addEventListener('click', closePanel));
 $('#modalLayer').addEventListener('click', (event) => { if (event.target === event.currentTarget) closePanel(); });
 document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && $('#modalLayer').classList.contains('is-open')) closePanel(); });
-window.addEventListener('hashchange', openHashPanel);
 
 $$('[data-minutes]').forEach((button) => button.addEventListener('click', () => {
   $$('.duration-row button').forEach((item) => item.classList.remove('is-selected'));
@@ -211,49 +160,25 @@ $$('[data-minutes]').forEach((button) => button.addEventListener('click', () => 
 $('#startTimer').addEventListener('click', toggleTimer);
 $('#resetTimer').addEventListener('click', resetTimer);
 
-$('#routineForm').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const form = new FormData(event.currentTarget);
-  state.routines.unshift({ id: crypto.randomUUID(), name: form.get('routineName').trim(), day: form.get('routineDay'), time: form.get('routineTime') });
-  state.routines = state.routines.slice(0, 6);
-  saveState(); renderRoutines(); event.currentTarget.reset(); $('#routineTime').value = '18:00'; showToast('Routine saved.');
-});
-$('#savedRoutines').addEventListener('click', (event) => {
-  const button = event.target.closest('[data-delete]');
-  if (!button) return;
-  state.routines = state.routines.filter((item) => item.id !== button.dataset.delete);
-  saveState(); renderRoutines();
-});
-
-$$('[data-add]').forEach((button) => button.addEventListener('click', () => {
-  const name = button.dataset.add;
-  const exists = state.cart.some((item) => item.name === name);
-  state.cart = exists ? state.cart.filter((item) => item.name !== name) : [...state.cart, { name, price: Number(button.dataset.price) }];
-  saveState(); renderCart(); showToast(exists ? 'Removed from your drop list.' : 'Saved to your drop list.');
+$$('[data-guide]').forEach((button) => button.addEventListener('click', () => {
+  $('#guideDetail').innerHTML = guideCopy[button.dataset.guide];
+  $('#guideDetail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }));
-$('#cartItems').addEventListener('click', (event) => {
-  const button = event.target.closest('[data-remove]');
-  if (!button) return;
-  state.cart = state.cart.filter((item) => item.name !== button.dataset.remove);
-  saveState(); renderCart();
+$('#guideDetail').addEventListener('click', async (event) => {
+  if (event.target.id !== 'copyGuideUrl') return;
+  try { await navigator.clipboard.writeText(`${location.origin}/tap`); showToast('Business Casual link copied.'); }
+  catch { showToast(`Save this link: ${location.origin}/tap`); }
 });
 
-$('#journalForm').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const form = new FormData(event.currentTarget);
-  state.journal.unshift({ trigger: form.get('trigger'), need: form.get('need').trim(), date: new Intl.DateTimeFormat([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date()) });
-  state.journal = state.journal.slice(0, 10);
-  saveState(); renderJournal(); event.currentTarget.reset(); showToast('Moment saved to this browser.');
+$('#clearHistory').addEventListener('click', () => {
+  state.sessions = [];
+  saveState();
+  renderHistory();
+  showToast('Your moments were cleared.');
 });
 
-$$('[data-setup-tab]').forEach((button) => button.addEventListener('click', () => setSetupTab(button.dataset.setupTab)));
-$('#settingsForm').addEventListener('submit', (event) => {
-  event.preventDefault();
-  state.preferences = { intro: $('#introToggle').checked, sound: $('#soundToggle').checked, reduceMotion: $('#motionToggle').checked };
-  saveState(); applyPreferences(); $('#settingsMessage').textContent = 'Saved to this browser ✓'; showToast('Settings saved.');
-});
-
-function updateClock() { $('#clock').textContent = new Intl.DateTimeFormat([], { hour: 'numeric', minute: '2-digit' }).format(new Date()); }
-applyPreferences(); renderRoutines(); renderCart(); renderJournal(); setSetupTab('ritual'); updateTimer(); updateClock();
+renderHistory();
+updateTimer();
+updateClock();
 setInterval(updateClock, 30000);
-if (state.preferences.intro) startConnection(); else enterDesktop();
+if (state.introSeen) enterDesktop(); else startConnection();

@@ -3,77 +3,154 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#064cae" />
-    <meta name="description" content="Business Casual makes expressive, tap-enabled jewelry for logging off and living more." />
-    <title>Business Casual – Log off. Live more.</title>
+    <meta name="theme-color" content="#063ea8" />
+    <meta name="description" content="Tap into Business Casual and make your piece your own." />
+    <title>Business Casual – Tap to get real</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <section class="connection-screen" id="connectionScreen" aria-label="Connecting to Business Casual">
-      <div class="connection-grain" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
       <div class="connection-topline"><span>BUSINESS CASUAL ONLINE</span><button id="skipConnection">Skip intro</button></div>
       <div class="cinema-viewport">
         <div class="cinema-track" id="cinemaTrack">
-          <article class="connect-card classic-window is-active" data-step="0"><div class="window-bar"><span>Business Casual</span><span>− □ ×</span></div><div class="connect-card-body"><div class="bc-orbit-logo" aria-hidden="true"><span>BC</span></div><p class="connecting-copy">Connecting to Business Casual...</p><div class="dial-icons" aria-hidden="true"><span>🏃</span><span>☎</span><span>🌐</span></div><div class="retro-progress"><i id="dialProgress"></i></div><strong class="status-copy" id="dialStatus">Dialing...</strong></div></article>
-          <div class="flow-arrow" aria-hidden="true">➜</div>
-          <article class="connect-card classic-window" data-step="1"><div class="window-bar"><span>Connecting...</span><span>− □ ×</span></div><div class="connect-card-body"><div class="bc-wordmark"><b>BC</b><span>online</span></div><div class="dial-icons compact" aria-hidden="true"><span>🏃</span><span>🌐</span></div><div class="retro-progress"><i></i></div><ul class="connection-list"><li>Authenticating your intention...</li><li>Negotiating a little breathing room...</li><li>Connecting to Business Casual...</li></ul></div></article>
-          <div class="flow-arrow" aria-hidden="true">➜</div>
-          <article class="connect-card classic-window" data-step="2"><div class="window-bar"><span>Connected!</span><span>− □ ×</span></div><div class="connect-card-body connected-body"><div class="bc-wordmark"><b>BC</b><span>online</span></div><div class="connected-globe" aria-hidden="true">🌎</div><p>Connection established.</p><strong>WELCOME TO<br />BUSINESS CASUAL</strong><div class="classic-button">Continue</div></div></article>
-          <div class="flow-arrow" aria-hidden="true">➜</div>
-          <article class="connect-card welcome-card classic-window" data-step="3"><div class="window-bar"><span>Welcome!</span><span>− □ ×</span></div><div class="welcome-art"><p>WELCOME TO</p><strong>BUSINESS<br />CASUAL</strong><em>LOG OFF. LIVE MORE.</em><button id="enterDesktop">Enter</button></div></article>
+          <article class="connect-card classic-window is-active">
+            <div class="window-bar"><span>Business Casual</span><span>− □ ×</span></div>
+            <div class="connect-card-body">
+              <div class="bc-orbit-logo"><span>BC</span></div>
+              <p>Connecting to something real...</p>
+              <div class="dial-icons"><span>🏃</span><span>☎</span><span>🌐</span></div>
+              <div class="retro-progress"><i id="dialProgress"></i></div>
+              <strong id="dialStatus">Dialing...</strong>
+            </div>
+          </article>
+          <div class="flow-arrow">➜</div>
+          <article class="connect-card classic-window">
+            <div class="window-bar"><span>Connecting...</span><span>− □ ×</span></div>
+            <div class="connect-card-body">
+              <div class="bc-wordmark"><b>BC</b><span>online</span></div>
+              <div class="dial-icons compact"><span>💎</span><span>🌐</span></div>
+              <div class="retro-progress"><i></i></div>
+              <ul><li>Recognizing your piece...</li><li>Loading a little breathing room...</li><li>Remembering what matters...</li></ul>
+            </div>
+          </article>
+          <div class="flow-arrow">➜</div>
+          <article class="connect-card classic-window">
+            <div class="window-bar"><span>Connected!</span><span>− □ ×</span></div>
+            <div class="connect-card-body connected-body">
+              <div class="connected-globe">🌎</div>
+              <p>This piece is your invitation.</p>
+              <strong>LOG OFF.<br />LIVE MORE.</strong>
+              <div class="classic-button">Continue</div>
+            </div>
+          </article>
+          <div class="flow-arrow">➜</div>
+          <article class="connect-card welcome-card classic-window">
+            <div class="window-bar"><span>Welcome!</span><span>− □ ×</span></div>
+            <div class="welcome-art"><p>WELCOME TO</p><strong>BUSINESS<br />CASUAL</strong><em>MAKE THIS TAP YOURS.</em><button id="enterDesktop">Enter</button></div>
+          </article>
         </div>
       </div>
       <div class="step-dots" aria-label="Connection progress"><i class="is-active"></i><i></i><i></i><i></i></div>
     </section>
 
     <main class="desktop" id="desktop" aria-hidden="true">
-      <div class="desktop-noise" aria-hidden="true"></div>
-      <nav class="site-nav" aria-label="Main navigation"><button class="nav-logo" data-home aria-label="Business Casual home">BC</button><div class="nav-links"><button data-open="shopPanel">Shop</button><button data-open="howPanel">How it works</button><button data-open="storyPanel">Our story</button><button data-open="setupPanel">Set up your piece</button></div><button class="nav-shop" data-open="shopPanel">Founder’s Drop <span>12</span></button></nav>
-      <div class="desktop-shortcuts" aria-label="Business Casual shortcuts"><button data-open="shopPanel"><span>💎</span>Shop the Drop</button><button data-open="storyPanel"><span>💌</span>Our Story</button><button data-open="setupPanel"><span>🖱️</span>Tap Setup</button><button data-open="impactPanel"><span>🫶</span>Impact</button></div>
-      <header class="desktop-heading"><p>Welcome to</p><h1>BUSINESS CASUAL<span aria-hidden="true">☺</span></h1><h2>JEWELRY FOR LOGGING OFF &amp; LIVING MORE.</h2><button class="hero-shop-button" data-open="shopPanel">SHOP THE FOUNDER’S DROP</button></header>
-      <aside class="status-window classic-window"><div class="window-bar"><span>Current Status</span><span>×</span></div><div class="status-content"><span class="globe-small" aria-hidden="true">🌐</span><strong id="systemStatus">ONLINE</strong><button data-open="focusPanel">&gt;&gt; GO OFFLINE</button></div></aside>
-      <section class="choice-window classic-window" aria-labelledby="choiceTitle"><div class="window-bar"><span id="choiceTitle">What do you want to do?</span><span>− □ ×</span></div><div class="choice-grid"><button class="choice-card" data-open="focusPanel"><span class="choice-image offline-image" aria-hidden="true"><i></i></span><strong>GO OFFLINE</strong><small>Choose what you’re<br />coming back to.</small></button><button class="choice-card" data-open="journalPanel"><span class="choice-image journal-image" aria-hidden="true">✎</span><strong>CHECK IN<br />WITH YOURSELF</strong><small>Notice the trigger.<br />Name what you need.</small></button><button class="choice-card" data-open="shopPanel"><span class="choice-image jewelry-image" aria-hidden="true"><i></i></span><strong>SHOP THE<br />FOUNDER’S DROP</strong><small>Handmade. Tap-enabled.<br />Only 12 first pieces.</small></button></div></section>
-      <div class="sticky-note" aria-hidden="true"><b>Reminder:</b>A less connected you<br />is a more present you. ♡</div>
+      <div class="grain" aria-hidden="true"></div>
+      <nav class="site-nav"><button class="nav-logo" data-home>BC</button><p>YOUR PIECE IS CONNECTED</p><div><button data-open="storyPanel">Why this exists</button><button data-open="helpPanel">Help</button></div></nav>
+
+      <div class="desktop-shortcuts">
+        <button data-open="storyPanel"><span>💌</span>Our Story</button>
+        <button data-open="historyPanel"><span>📔</span>My Moments</button>
+        <button data-open="helpPanel"><span>❔</span>Help</button>
+      </div>
+
+      <header class="desktop-heading">
+        <p>Welcome to</p>
+        <h1>BUSINESS CASUAL<span>☺</span></h1>
+        <h2>A TAP THAT TURNS YOUR PHONE INTO A CHOICE.</h2>
+      </header>
+
+      <aside class="status-window classic-window">
+        <div class="window-bar"><span>Current Status</span><span>×</span></div>
+        <div class="status-content"><span>🌐</span><strong id="systemStatus">ONLINE</strong><button data-open="focusPanel">&gt;&gt; GO OFFLINE</button></div>
+      </aside>
+
+      <section class="choice-window classic-window" aria-labelledby="choiceTitle">
+        <div class="window-bar"><span id="choiceTitle">What should this piece do?</span><span>− □ ×</span></div>
+        <div class="choice-grid">
+          <button class="choice-card" data-open="focusPanel">
+            <span class="choice-image offline-image"><i></i></span>
+            <strong>GO OFFLINE</strong>
+            <small>Start a quiet timer.<br />Come back to your life.</small>
+          </button>
+          <button class="choice-card" data-open="keyPanel">
+            <span class="choice-image key-image">⌁</span>
+            <strong>CUSTOMIZE<br />MY TAP</strong>
+            <small>Choose Focus, blocking,<br />a link, or a routine.</small>
+          </button>
+          <button class="choice-card" data-open="storyPanel">
+            <span class="choice-image mine-image">♡</span>
+            <strong>ABOUT<br />MY PIECE</strong>
+            <small>Why it was made<br />and how to use it.</small>
+          </button>
+        </div>
+      </section>
+
+      <div class="sticky-note"><b>This piece is yours.</b>Use it to make a little room for what matters. ♡</div>
       <footer class="taskbar"><button class="start-button" data-open="startPanel"><span>BC</span> Start</button><div class="task-tab">🌐 Business Casual</div><div class="clock" id="clock"></div></footer>
     </main>
 
     <div class="modal-layer" id="modalLayer" aria-hidden="true">
-      <section class="app-modal classic-window" id="focusPanel" role="dialog" aria-modal="true" aria-labelledby="focusTitle" hidden><div class="window-bar"><span id="focusTitle">Go Offline</span><button data-close aria-label="Close">×</button></div><div class="modal-body timer-body"><p class="modal-kicker">WHAT ARE YOU LOGGING OFF FOR?</p><select id="focusRoutine"><option>Make something</option><option>Be with someone I love</option><option>Take a quiet walk</option><option>Read a few pages</option><option>Rest without earning it</option><option>Do absolutely nothing</option></select><div class="duration-row"><button data-minutes="10">10 min</button><button data-minutes="25" class="is-selected">25 min</button><button data-minutes="45">45 min</button></div><div class="timer-display" id="timerDisplay">25:00</div><p class="timer-message" id="timerMessage">Ready when you are.</p><div class="modal-actions"><button class="hot-button" id="startTimer">START LIVING</button><button id="resetTimer">Reset</button></div><p class="browser-note"><b>Right now:</b> this browser timer is a ritual, not a phone blocker. The future Business Casual app will require Apple Screen Time permission. Until then, your piece can work with a compatible third-party app such as Foqos.</p></div></section>
-
-      <section class="app-modal wide-modal classic-window" id="shopPanel" role="dialog" aria-modal="true" aria-labelledby="shopTitle" hidden>
-        <div class="window-bar"><span id="shopTitle">Business Casual Shop.exe</span><button data-close aria-label="Close">×</button></div>
-        <div class="shop-shell">
-          <header class="shop-hero"><div><p class="eyebrow">THE FIRST CONNECTION</p><h2>Founder’s Drop</h2><p>Twelve handmade, tap-enabled pieces born between caregiving moments. Each arrives connected to Business Casual and stays rewritable, because what you come back to is yours.</p></div><div class="drop-stamp"><strong>12</strong><span>NUMBERED<br />PIECES</span></div></header>
-          <div class="prototype-banner"><b>Prototype preview</b><span>Final product photography, materials, and wear-test results will be added before checkout opens.</span></div>
-          <div class="store-layout">
-            <div class="product-grid">
-              <article class="product-card"><div class="product-visual necklace-visual"><span class="chain"></span><span class="pendant">BC</span><i>01</i></div><div class="product-copy"><p class="product-tag">THE HERO PIECE</p><h3>The Offline Necklace</h3><p>Handmade necklace with a rewritable NFC centerpiece. Tap to begin a ritual, connect a compatible blocker, or hold something meaningful.</p><div class="product-meta"><b>$75</b><span>Gold or silver</span></div><button class="add-button" data-add="The Offline Necklace" data-price="75">ADD TO DROP LIST</button></div></article>
-              <article class="product-card"><div class="product-visual charm-visual"><span class="cord"></span><span class="bead one"></span><span class="bead two"></span><span class="tap-charm">TAP</span><i>02</i></div><div class="product-copy"><p class="product-tag">CLIP IT ANYWHERE</p><h3>The Tap Charm</h3><p>A detachable NFC charm for a bag, keys, phone strap, or necklace. Remove it and leave it behind when you want stronger physical distance.</p><div class="product-meta"><b>$45</b><span>Mixed colors</span></div><button class="add-button" data-add="The Tap Charm" data-price="45">ADD TO DROP LIST</button></div></article>
-              <article class="product-card"><div class="product-visual custom-visual"><span>YOU</span><b>✦</b><i>03</i></div><div class="product-copy"><p class="product-tag">MADE AROUND YOU</p><h3>The Custom Connection</h3><p>Choose your chain, color story, charms, and starting intention. Handmade as a one-of-one Business Casual piece.</p><div class="product-meta"><b>$95</b><span>Made to order</span></div><button class="add-button" data-add="The Custom Connection" data-price="95">ADD TO DROP LIST</button></div></article>
-            </div>
-            <aside class="drop-cart" aria-live="polite"><p class="eyebrow">MY DROP LIST</p><h3>Saved pieces</h3><div id="cartItems" class="cart-items"><p class="empty-cart">Nothing saved yet. Choose what feels like you.</p></div><div class="cart-total"><span>Preview total</span><b id="cartTotal">$0</b></div><button class="checkout-button" id="checkoutButton" disabled>CHECKOUT COMING SOON</button><small>Checkout will open through our secure store when the first pieces pass wear and NFC testing.</small></aside>
-          </div>
-          <section class="value-strip"><div><b>HANDMADE</b><span>Small-batch, not mass-made</span></div><div><b>REWRITABLE</b><span>Your piece can evolve with you</span></div><div><b>NO BATTERY</b><span>Passive NFC, no charging</span></div><div><b>HONEST TECH</b><span>Clear setup and compatibility</span></div></section>
-          <section class="shop-note"><p class="script-heading">Not just another thing to wear.</p><p>Business Casual jewelry is designed as a cue: a small physical moment between reaching for your phone and choosing what you actually need. It can help start the boundary. You decide what happens on the other side.</p><button class="secondary-button" data-open="howPanel">SEE HOW IT WORKS</button></section>
+      <section class="app-modal classic-window" id="focusPanel" role="dialog" aria-modal="true" aria-labelledby="focusTitle" hidden>
+        <div class="window-bar"><span id="focusTitle">Go Offline</span><button data-close aria-label="Close">×</button></div>
+        <div class="modal-body timer-body">
+          <p class="modal-kicker">WHAT ARE YOU COMING BACK TO?</p>
+          <select id="focusRoutine"><option>Be with someone I love</option><option>Make something</option><option>Study with intention</option><option>Move my body</option><option>Read a few pages</option><option>Rest without earning it</option><option>Do absolutely nothing</option></select>
+          <label for="intention">One small intention <span>(optional)</span></label>
+          <input id="intention" maxlength="90" placeholder="Put my phone down and be here" />
+          <div class="duration-row"><button data-minutes="10">10 min</button><button data-minutes="25" class="is-selected">25 min</button><button data-minutes="45">45 min</button></div>
+          <div class="timer-display" id="timerDisplay">25:00</div>
+          <p class="timer-message" id="timerMessage">Ready when you are.</p>
+          <div class="modal-actions"><button class="hot-button" id="startTimer">START LIVING</button><button id="resetTimer">Reset</button></div>
+          <p class="browser-note"><b>Honest note:</b> this timer creates a ritual, but a website cannot silence or block other apps. Choose “Customize My Tap” to connect your piece to tools that can.</p>
         </div>
       </section>
 
-      <section class="app-modal story-modal classic-window" id="storyPanel" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden><div class="window-bar"><span id="storyTitle">Our Story.txt</span><button data-close aria-label="Close">×</button></div><div class="story-shell"><div class="story-title"><span>Made in the in-between.</span><h2>Business Casual began during the hardest season of my life.</h2></div><div class="story-columns"><div class="story-photo-placeholder" aria-label="Founder photograph coming soon"><div>FOUNDER PHOTO<br />COMING SOON</div><small>the hands behind every piece</small></div><div class="story-copy"><p>I moved home to care for my mom after she was diagnosed with ALS. As she needed full-time care, traditional work stopped fitting into our life.</p><p>I started making jewelry because it was something I could pick up between caregiving moments and put down the second she needed me. There was no perfect schedule. There were only little pockets of time and whatever I could make inside them.</p><p>During that same season, I realized how badly I needed space from my phone. I loved the idea behind physical app blockers, learned how NFC tags worked, and figured out how to place them inside the jewelry I was already making.</p><blockquote>Business Casual came from combining those two needs: making something expressive with my hands and finding a physical way back to the life happening around me.</blockquote><p>Every purchase supports me as an independent maker and caregiver while my mom is living with ALS. As the business grows, my goal is to establish a transparent annual contribution to ALS research in her honor.</p></div></div><div class="story-footer"><b>LOG OFF.</b><span>Make something. Love someone. Be where you are.</span><b>LIVE MORE.</b></div></div></section>
+      <section class="app-modal wide-modal classic-window" id="keyPanel" role="dialog" aria-modal="true" aria-labelledby="keyTitle" hidden>
+        <div class="window-bar"><span id="keyTitle">Customize My Tap</span><button data-close aria-label="Close">×</button></div>
+        <div class="guide-shell">
+          <header><p class="eyebrow">MAKE THIS PIECE YOURS</p><h2>What should your tap do?</h2><p>Choose something simple, build a phone boundary, or turn the piece into any routine you can imagine.</p></header>
+          <div class="path-grid">
+            <article><span class="path-number">01</span><div class="path-icon">☾</div><h3>Silence notifications</h3><p>Use Apple Shortcuts to recognize this necklace and turn on a Focus whenever you scan it.</p><button data-guide="focus">SHOW FOCUS SETUP</button><small>Free · iPhone · about 2 minutes</small></article>
+            <article><span class="path-number">02</span><div class="path-icon">▣</div><h3>Block distracting apps</h3><p>Use a compatible Screen Time app that accepts an NFC tag as the physical start or stop key.</p><button data-guide="block">SHOW BLOCKING SETUP</button><small>Third-party app required</small></article>
+            <article><span class="path-number">03</span><div class="path-icon">↗</div><h3>Build any routine</h3><p>Start a playlist, open a journal, text someone, or combine several actions in Shortcuts.</p><button data-guide="routine">SEE ROUTINE IDEAS</button><small>Free · the most flexible</small></article>
+            <article><span class="path-number">04</span><div class="path-icon">✦</div><h3>Rewrite the tag</h3><p>Replace the Business Casual link with any website, playlist, message, or digital destination.</p><button data-guide="rewrite">SHOW REWRITE STEPS</button><small>Advanced · completely open</small></article>
+          </div>
+          <div class="guide-detail" id="guideDetail"><p>Choose a path above. Your original Business Casual link can stay on the tag while Shortcuts recognizes the tag itself.</p></div>
+        </div>
+      </section>
 
-      <section class="app-modal wide-modal classic-window" id="howPanel" role="dialog" aria-modal="true" aria-labelledby="howTitle" hidden><div class="window-bar"><span id="howTitle">How It Works.help</span><button data-close aria-label="Close">×</button></div><div class="editorial-shell"><header class="editorial-heading"><p class="eyebrow">A PHYSICAL PAUSE</p><h2>Tap out of autopilot.</h2><p>The jewelry is the cue. Your intention is the point.</p></header><div class="how-steps"><article><span>01</span><div class="step-icon">✦</div><h3>Wear your reminder</h3><p>Choose a piece that feels like you. The NFC element stays hidden inside the design.</p></article><article><span>02</span><div class="step-icon">◉</div><h3>Tap with intention</h3><p>Hold the piece near the top of an unlocked compatible phone and open the notification.</p></article><article><span>03</span><div class="step-icon">↗</div><h3>Choose what comes next</h3><p>Start an offline timer, connect a compatible blocker, or program the piece with your own meaningful link.</p></article><article><span>04</span><div class="step-icon">♡</div><h3>Go live your life</h3><p>Make, rest, move, connect, or do nothing at all. Productivity is not required.</p></article></div><div class="mode-comparison"><article><p class="eyebrow">RITUAL MODE</p><h3>Keep it with you.</h3><p>Tap to start a timed session or intentional pause. Best when you want a meaningful cue without a hard lock.</p></article><article><p class="eyebrow">DISTANCE MODE</p><h3>Leave the key behind.</h3><p>Use a detachable piece with a compatible blocking app. Put it somewhere else so ending the session requires a physical return.</p></article></div><div class="honesty-callout"><b>What the jewelry can and cannot do</b><p>An NFC tag is a trigger, not a blocker by itself. A website cannot block other apps. True app blocking requires compatible software and the phone owner’s permission. The first drop will include setup guidance, and we will never hide that distinction.</p></div><button class="primary-button" data-open="setupPanel">SET UP A PIECE</button></div></section>
+      <section class="app-modal story-modal classic-window" id="storyPanel" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
+        <div class="window-bar"><span id="storyTitle">Why This Exists.txt</span><button data-close aria-label="Close">×</button></div>
+        <div class="story-shell"><p class="script-heading">Made in the in-between.</p><h2>Business Casual began during the hardest season of my life.</h2><p>I moved home to care for my mom after she was diagnosed with ALS. As she needed full-time care, traditional work stopped fitting into our life.</p><p>I started making jewelry because I could pick it up between caregiving moments and put it down the second she needed me. During that same season, I realized how badly I needed space from my phone.</p><blockquote>Business Casual came from combining those two needs: making something expressive with my hands and finding a physical way back to the life happening around me.</blockquote><p>This piece is not here to tell you how to live. It is a small invitation to choose.</p><div class="story-signoff">Made by hand to bring you back to your life. ♡</div></div>
+      </section>
 
-      <section class="app-modal classic-window" id="journalPanel" role="dialog" aria-modal="true" aria-labelledby="journalTitle" hidden><div class="window-bar"><span id="journalTitle">Check In</span><button data-close aria-label="Close">×</button></div><form class="modal-body journal-form" id="journalForm"><p class="modal-kicker">BEFORE YOU SCROLL, NOTICE WHAT BROUGHT YOU HERE.</p><fieldset><legend>What are you reaching for?</legend><div class="chip-options"><label><input type="radio" name="trigger" value="Escape" required><span>Escape</span></label><label><input type="radio" name="trigger" value="Connection"><span>Connection</span></label><label><input type="radio" name="trigger" value="Comfort"><span>Comfort</span></label><label><input type="radio" name="trigger" value="Information"><span>Information</span></label><label><input type="radio" name="trigger" value="Stimulation"><span>Stimulation</span></label><label><input type="radio" name="trigger" value="Habit"><span>Habit</span></label></div></fieldset><label for="journalNeed">What might help more right now?</label><textarea id="journalNeed" name="need" rows="3" maxlength="180" placeholder="A walk, a call, a cry, a glass of water, ten quiet minutes..."></textarea><button class="hot-button full" type="submit">SAVE THIS MOMENT</button><p class="browser-note">Private by design: this demo saves entries only in this browser. It does not send them anywhere.</p><div id="journalHistory" class="journal-history"></div></form></section>
+      <section class="app-modal classic-window" id="historyPanel" role="dialog" aria-modal="true" aria-labelledby="historyTitle" hidden>
+        <div class="window-bar"><span id="historyTitle">My Moments</span><button data-close aria-label="Close">×</button></div>
+        <div class="modal-body"><p class="modal-kicker">SAVED ONLY IN THIS BROWSER</p><div id="sessionHistory" class="session-history"></div><button class="text-button" id="clearHistory">Clear my history</button></div>
+      </section>
 
-      <section class="app-modal classic-window" id="setupPanel" role="dialog" aria-modal="true" aria-labelledby="setupTitle" hidden><div class="window-bar"><span id="setupTitle">Set Up Your Piece</span><button data-close aria-label="Close">×</button></div><div class="modal-body setup-body"><p class="modal-kicker">ONE PIECE. MORE THAN ONE POSSIBILITY.</p><div class="setup-tabs" role="tablist"><button class="is-selected" data-setup-tab="ritual" role="tab">Business Casual</button><button data-setup-tab="block" role="tab">Block apps</button><button data-setup-tab="custom" role="tab">Make it mine</button></div><div class="setup-content" id="setupContent"></div><div class="compatibility"><b>Before you tap</b><ul><li>Unlock the phone and keep the screen awake.</li><li>Hold the NFC area near the top back of the phone for a few seconds.</li><li>Thick or magnetic cases can interfere.</li><li>The final jewelry design must pass NFC testing before sale.</li></ul></div></div></section>
+      <section class="app-modal classic-window" id="helpPanel" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+        <div class="window-bar"><span id="helpTitle">Help</span><button data-close aria-label="Close">×</button></div>
+        <div class="modal-body help-body"><p class="modal-kicker">TAPPING YOUR PIECE</p><ol><li>Unlock your phone and keep the screen awake.</li><li>Hold the NFC area near the top back of the phone for a few seconds.</li><li>Tap the notification that appears.</li></ol><p>Thick or magnetic cases and nearby metal can interfere. Try removing the case or moving the piece slightly.</p><p><b>Nothing here changes your phone without your permission.</b> Focus modes and blocking apps require their own one-time setup.</p></div>
+      </section>
 
-      <section class="app-modal classic-window" id="impactPanel" role="dialog" aria-modal="true" aria-labelledby="impactTitle" hidden><div class="window-bar"><span id="impactTitle">Impact</span><button data-close aria-label="Close">×</button></div><div class="modal-body impact-body"><p class="script-heading">Built to hold a life together.</p><h2>What your purchase supports now</h2><p>Business Casual currently supports an independent maker and caregiver building flexible work while caring for her mom with ALS. Your purchase is not a charitable donation.</p><h2>What we want to build toward</h2><p>As Business Casual becomes financially stable, the goal is to create a documented annual contribution to ALS research in honor of her mom. When that program begins, this page will name the organization, exact contribution formula, campaign dates, and amount donated.</p><div class="impact-promise"><b>THE PROMISE</b><span>No vague “portion of proceeds.” No borrowed charity logo. Just clear numbers when the program is real.</span></div></div></section>
-
-      <section class="app-modal classic-window" id="startPanel" role="dialog" aria-modal="true" aria-labelledby="startTitle" hidden><div class="window-bar"><span id="startTitle">Start</span><button data-close aria-label="Close">×</button></div><div class="start-menu"><button data-open="shopPanel">💎 Shop the Founder’s Drop</button><button data-open="focusPanel">🌴 Go Offline</button><button data-open="journalPanel">✎ Check In</button><button data-open="routinePanel">📔 Schedule a Routine</button><button data-open="settingsPanel">⚙ My Settings</button><button data-open="storyPanel">💌 Our Story</button></div></section>
-
-      <section class="app-modal classic-window" id="routinePanel" role="dialog" aria-modal="true" aria-labelledby="routineTitle" hidden><div class="window-bar"><span id="routineTitle">Schedule a Routine</span><button data-close aria-label="Close">×</button></div><form class="modal-body" id="routineForm"><p class="modal-kicker">MAKE A DATE WITH REAL LIFE</p><label for="routineName">Routine name</label><input id="routineName" name="routineName" required maxlength="50" placeholder="Sunday morning wander" /><div class="form-grid"><div><label for="routineDay">Day</label><select id="routineDay" name="routineDay"><option>Today</option><option>Tomorrow</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div><div><label for="routineTime">Time</label><input id="routineTime" name="routineTime" type="time" value="18:00" required /></div></div><button class="hot-button full" type="submit">SAVE ROUTINE</button><div id="savedRoutines" class="saved-routines" aria-live="polite"></div></form></section>
-
-      <section class="app-modal classic-window" id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden><div class="window-bar"><span id="settingsTitle">My Settings</span><button data-close aria-label="Close">×</button></div><form class="modal-body" id="settingsForm"><p class="modal-kicker">CUSTOMIZE YOUR RITUAL</p><label class="setting-row"><span><b>Play the connection intro</b><small>Show it each time you scan</small></span><input id="introToggle" type="checkbox" checked /></label><label class="setting-row"><span><b>Timer chime</b><small>Play a small sound when time is up</small></span><input id="soundToggle" type="checkbox" checked /></label><label class="setting-row"><span><b>Reduce motion</b><small>Use quick fades instead of cinematic movement</small></span><input id="motionToggle" type="checkbox" /></label><button class="hot-button full" type="submit">SAVE SETTINGS</button><p class="saved-message" id="settingsMessage"></p></form></section>
+      <section class="app-modal classic-window" id="startPanel" role="dialog" aria-modal="true" aria-labelledby="startTitle" hidden>
+        <div class="window-bar"><span id="startTitle">Start</span><button data-close aria-label="Close">×</button></div>
+        <div class="start-menu"><button data-open="focusPanel">🌴 Go Offline</button><button data-open="keyPanel">🔑 Customize My Tap</button><button data-open="historyPanel">📔 My Moments</button><button data-open="storyPanel">💌 About My Piece</button><button data-open="helpPanel">❔ Help</button></div>
+      </section>
     </div>
+
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="app.js"></script>
   </body>
