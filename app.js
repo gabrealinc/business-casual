@@ -20,7 +20,7 @@ let timer = { duration: 25 * 60, remaining: 25 * 60, running: false, interval: n
 const saveState = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 
 function setConnectionStep(step) {
-  const current = Math.min(3, step);
+  const current = Math.min(2, step);
   $('#cinemaTrack').style.setProperty('--step', current);
   $$('.connect-card').forEach((card, index) => card.classList.toggle('is-active', index === current));
   $$('.flow-arrow').forEach((arrow, index) => arrow.classList.toggle('is-lit', index < current));
@@ -35,8 +35,8 @@ function startConnection() {
     if (progress > 35) $('#dialStatus').textContent = progress < 80 ? 'Recognizing...' : 'Almost there...';
     if (progress >= 100) clearInterval(progressTimer);
   }, 300);
-  [2100, 4200, 6200].forEach((delay, index) => setTimeout(() => setConnectionStep(index + 1), delay));
-  introTimer = setTimeout(enterDesktop, 8500);
+  [2000, 4000].forEach((delay, index) => setTimeout(() => setConnectionStep(index + 1), delay));
+  introTimer = setTimeout(enterDesktop, 6200);
 }
 
 function enterDesktop() {
